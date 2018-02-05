@@ -83,8 +83,8 @@ def std_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
     return (years,average)
 
 def word_mention(WORD,HEADLINE):
-    WORDS=[word.strip(string.punctuation) for word in HEADLINE.split()]
     try:
+        WORDS=[word.strip(string.punctuation) for word in HEADLINE.split()]
         for EL in WORDS:
             if EL.lower()==WORD.lower():
                 return True
