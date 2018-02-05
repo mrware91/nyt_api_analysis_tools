@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 from Workspace import *
+# import nltk
+import string
 
 # wcVdate=load_obj('wcVdate')
 # fullDict=load_obj('WC_DATE_NAME_PAGE')
@@ -62,6 +64,15 @@ def med_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
         average.append(np.nanmedian(WCS[year_idxs]))
     return (years,average)
 
+def tot_by_year(DATES,WCS,Y0=1853,Y1=2018):
+    years=range(Y0,Y1)
+    average=[]
+    # WCS=np.array(WCS,dtype=np.float)
+    for year in years:
+        year_idxs=grab_idx_of_year(DATES,year)
+        average.append(len(year_idxs))
+    return (years,average)
+
 def std_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
     years=range(Y0,Y1)
     average=[]
@@ -70,6 +81,26 @@ def std_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
         year_idxs=grab_idx_of_year(DATES,year)
         average.append(np.nanstd(WCS[year_idxs]))
     return (years,average)
+
+def word_mention(WORD,HEADLINE):
+    WORDS=[word.strip(string.punctuation) for word in HEADLINE.split()]
+    for EL in WORDS:
+        if EL.lower()==WORD.lower():
+            return True
+    return False
+
+def avgword_mention_by_year(WORD,DATES,HEADLINE,Y0=1853,Y1=2018):
+    years=range(Y0,Y1)
+    mentions=[]
+    for year in years:
+        year_idxs=grab_idx_of_year(DATES,year)
+        nmentions=0
+        for idx in year_idxs:
+            if word_mention(WORD,HEADLINE[idx]):
+                nmentions+=1
+        mentions.append(float(nmentions)/float(len(year_idxs)))
+    return (years,mentions)
+
 
 # def clean_nones(alist):
 #     newlist=[]
