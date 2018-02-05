@@ -47,10 +47,19 @@ def grab_idx_of_year(DATES,YEAR):
 def avg_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
     years=range(Y0,Y1)
     average=[]
-    WCS=np.array(WCS,dtype=np.float)
+    # WCS=np.array(WCS,dtype=np.float)
     for year in years:
         year_idxs=grab_idx_of_year(DATES,year)
         average.append(np.nanmean(WCS[year_idxs]))
+    return (years,average)
+
+def med_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
+    years=range(Y0,Y1)
+    average=[]
+    # WCS=np.array(WCS,dtype=np.float)
+    for year in years:
+        year_idxs=grab_idx_of_year(DATES,year)
+        average.append(np.nanmedian(WCS[year_idxs]))
     return (years,average)
 
 def std_wc_by_year(DATES,WCS,Y0=1853,Y1=2018):
